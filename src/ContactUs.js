@@ -10,22 +10,16 @@ function ContactUs() {
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   useEffect(() => {
-    console.log("before submit", hasSubmitted);
-    if (hasSubmitted) {
-      const errors = {};
-      if (!name.length) errors["name"] = "Please enter your Name";
-      if (!email.includes("@"))
-        errors["email"] = "Please provide a valid Email";
-      console.log(errors);
-      setValidationErrors(...errors);
-    }
-  });
+    const errors = {};
+    if (!name.length) errors["name"] = "Please enter your Name";
+    if (!email.includes("@")) errors["email"] = "Please provide a valid Email";
+    setValidationErrors(errors);
+  }, [name, email]);
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    setHasSubmitted(() => true);
-    console.log(hasSubmitted);
+    setHasSubmitted(true);
     if (Object.values(validationErrors).length) return alert(`Cannot Submit`);
 
     const contactUsInformation = {
@@ -44,6 +38,7 @@ function ContactUs() {
     setPhoneType("");
     setComments("");
     setValidationErrors({});
+    setHasSubmitted(false);
   };
 
   return (
